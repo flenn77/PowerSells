@@ -26,7 +26,7 @@ Face à une demande croissante de gestion optimale des stocks, le supermarché S
 - Identification sécurisée à l'application.
 - Attribution d'un rôle spécifique (Manager ou Caissier).
 
-[[Schema connexion.JPG](https://image.noelshack.com/fichiers/2023/43/2/1698155536-diagramme-de-cas-d-utilisation.jpg)]
+![Texte alternatif](https://image.noelshack.com/fichiers/2023/43/2/1698155536-diagramme-de-cas-d-utilisation.jpg)
 ### b. Manager
 
 #### i. Vue d'ensemble des stocks
