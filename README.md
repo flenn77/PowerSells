@@ -26,7 +26,7 @@ Face à une demande croissante de gestion optimale des stocks, le supermarché S
 - Identification sécurisée à l'application.
 - Attribution d'un rôle spécifique (Manager ou Caissier).
 
-![Texte alternatif](https://image.noelshack.com/fichiers/2023/43/2/1698155536-diagramme-de-cas-d-utilisation.jpg)
+![Texte alternatif](https://image.noelshack.com/fichiers/2023/43/2/1698156050-schema-connexion.jpg)
 ### b. Manager
 
 #### i. Vue d'ensemble des stocks
@@ -112,9 +112,9 @@ L'application "PowerSells" est conçue pour optimiser la gestion des stocks de S
 ## 10. Annexes
 
 ### Schéma Base De Donnée
-![Texte alternatif](https://image.noelshack.com/fichiers/2023/43/2/1698155536-schema-base-de-donnee.png)
+![Texte alternatif](https://image.noelshack.com/fichiers/2023/43/2/1698156238-schema-base-de-donnee.png)
 
 
 ### Diagramme de cas d’utilisation
-![Texte alternatif](https://image.noelshack.com/fichiers/2023/43/2/1698155536-schema-connexion.jpg)
+![Texte alternatif](https://image.noelshack.com/fichiers/2023/43/2/1698155536-diagramme-de-cas-d-utilisation.jpg)
 
