@@ -112,10 +112,9 @@ L'application "PowerSells" est conçue pour optimiser la gestion des stocks de S
 ## 10. Annexes
 
 ### Schéma Base De Donnée
+![Texte alternatif](https://image.noelshack.com/fichiers/2023/43/2/1698155536-schema-base-de-donnee.png)
 
-![schema Base De Donnée.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/111c6fd0-cdf7-462b-8f47-9d873c6fa731/9bdc053c-63ae-4ad6-81c1-824e9b383604/schema_Base_De_Donne.png)
 
 ### Diagramme de cas d’utilisation
-
-(Insérez ici votre diagramme de cas d'utilisation ou le lien vers celui-ci)
+![Texte alternatif](https://image.noelshack.com/fichiers/2023/43/2/1698155536-schema-connexion.jpg)
 
