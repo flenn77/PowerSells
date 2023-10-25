@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
         linkNotSelected.id = 'linkSelected';
     }
 
-    if (path.includes('login')){
-        document.getElementById('sidebar').style.display = "none";
+    if (!path.includes('login')){
+        document.getElementById('sidebar').style.display = "flex";
     }
 });
