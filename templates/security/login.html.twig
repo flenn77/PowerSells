@@ -3,34 +3,42 @@
 {% block title %}Page de Connexion{% endblock %}
 
 {% block body %}
-<div class="login-container">
-    <div class="left-panel">
-        <img class="illustration-image" src="{{ asset('build/img/image-login-page.png')}}" alt="">
+<div id="loginContainer">
+        <div id="leftLoginContainer">
+                <img src="{{  asset('build/img/loginImage.png')}}" alt="">
+        </div>
+        <div id="rightLoginContainer">
+                <div id="rightLoginContainerAll">
+                        <form method="post">
+                                <div id="rightLoginContainerTitle">
+                                        <h2>Bienvenue sur Powersells !</h2>
+                                        <p>Veuillez vous connecter à votre compte</p>
+                                </div>
+                                <div id="rightLoginContainerForm">
+                                        <div>
+                                                <input type="email" value="{{ last_username }}" name="email"
+                                                       placeholder="Email" id="inputEmail"
+                                                       autocomplete="email" required autofocus>
+                                        </div>
 
-    </div>
-    <div class="right-panel">
-        <h1 class="h3 mb-3 font-weight-normal">Bienvenue sur PowerSells !</h1>
-        <p>Veuillez vous connecter à votre compte :</p>
+                                        <div>
+                                                <input type="password" name="password" id="inputPassword"
+                                                       autocomplete="current-password"
+                                                       placeholder="Password"
+                                                       required>
+                                        </div>
 
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
+                                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                                </div>
 
-        <form method="post">
-            <div class="form-group">
-                <label for="inputEmail">Email</label>
-                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-            </div>
-            
-            <div class="form-group">
-                <label for="inputPassword">Mot de passe</label>
-                <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-            </div>
-
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-            <button class="btn btn-lg btn-primary" type="submit">CONNEXION</button>
-        </form>
-    </div>
+                                <div id="rightLoginContainerBtn">
+                                        <button type="submit">CONNEXION</button>
+                                </div>
+                        </form>
+                        {% if error %}
+                                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+                </div>
+        </div>
 </div>
 {% endblock %}

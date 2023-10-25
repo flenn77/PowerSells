@@ -15,4 +15,12 @@ class InventoryController extends AbstractController
             'controller_name' => 'InventoryController',
         ]);
     }
+
+    #[Route('/inventory/form', name: 'app_inventory_form')]
+    public function form(): Response
+    {
+        return $this->render('inventory/formInventory.html.twig', [
+            'controller_name' => 'InventoryController',
+        ]);
+    }
 }

@@ -7,28 +7,12 @@
     <div id="newArticle">
         <div id="emptyNewArticle"></div>
         <div id="newArticleBtnContainer">
-            <button id="newArticleBtn">NOUVEL ARTICLE</button>
+            <a href="{{ path('app_inventory_form') }}" id="newArticleBtn">NOUVEL ARTICLE</a>
         </div>
     </div>
 
-    <style>
-        #newArticle{
-            height: 80px;
-            width: 100%;
-            display: flex;
-        }
+    <div id="datatableAllArticles">
 
-        #emptyNewArticle{
-            height: 100%;
-            width: 80%;
-            background-color: green;
-        }
-
-        #newArticleBtnContainer{
-            height: 100%;
-            width: 20%;
-            background-color: blue;
-        }
-    </style>
+    </div>
 
 {% endblock %}
