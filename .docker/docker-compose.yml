@@ -1,0 +1,80 @@
+version: '3.7'
+
+services:
+# Conteneur Apache simple gérant les vhosts
+    httpd:
+        container_name: powersells_apache
+        restart: on-failure
+        image: httpd:2.4
+        ports: 
+            - 80:80
+            - 443:443
+        volumes:
+            - ./config/apache/httpd.conf:/usr/local/apache2/conf/httpd.conf:delegated
+            - ./config/apache/vhosts/:/usr/local/apache2/conf/vhosts:delegated
+            - ./config/apache/ssl/localhost.crt:/usr/local/apache2/conf/server.crt:delegated
+            - ./config/apache/ssl/localhost.key:/usr/local/apache2/conf/server.key:delegated
+            - ../:/usr/local/apache2/htdocs:delegated
+            - ./var/logs/apache/:/var/log/apache2:delegated
+        depends_on:
+            - php
+
+# Conteneur proxy php
+    php:
+        container_name: powersells_php
+        restart: on-failure
+        build: ./config/php/
+        image: local/php:8.1-njs-current
+        expose:
+            - 9009
+        volumes:
+            - ../:/usr/local/apache2/htdocs:delegated
+            - ./config/php/php-ini-overrides.ini:/etc/php/8.1/fpm/conf.d/99-overrides.ini:delegated
+            - ./var/logs/php/:/var/log/php:delegated
+            - ./config/php/msmtprc.conf:/etc/msmtprc:ro
+            - ./config/php/php-mail.conf:/usr/local/etc/php/conf.d/mail.ini:ro
+        depends_on:
+            - mysqldb
+
+# Conteneur pour la base de données
+    mysqldb:
+        container_name: powersells_mysql
+        platform: linux/amd64
+        restart: on-failure
+        image: mysql:5.7
+        expose:
+            - 3306
+        ports:
+            - 3306:3306
+        volumes:
+            - ./var/db/:/var/lib/mysql:delegated
+            - ./config/initdb/:/docker-entrypoint-initdb.d
+        environment:
+            MYSQL_ROOT_PASSWORD: mysql
+            MYSQL_DATABASE: mydb
+            MYSQL_USER: mydbuser
+            MYSQL_PASSWORD: mydbpassword
+
+# Conteneur pour le serveur smtp de test (http://localhost:8025)
+    mailhog:
+        container_name: powersells_mailhog
+        restart: on-failure
+        image: mailhog/mailhog:latest
+        expose:
+            - 1025
+        ports:
+            - 8025:8025
+
+# Conteneur pour l'administration de la base de données (http://localhost:8336)
+    phpmyadmin:
+        container_name: powersells_pma
+        restart: on-failure
+        image: phpmyadmin/phpmyadmin:latest
+        environment:
+            PMA_HOST: mysqldb
+            PMA_USER: root
+            PMA_PASSWORD: mysql
+        ports:
+            - 8336:80
+        depends_on:
+            - mysqldb

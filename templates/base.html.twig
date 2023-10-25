@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}{% endblock %}</title>
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </head>
+    <body>
+    <div id="bodyContainer">
+
+        {% include "_partials/sidebar.html.twig" %}
+
+        <div id="body">
+            {% include "_partials/navbar.html.twig" %}
+            {% block body %}
+            {% endblock %}
+        </div>
+
+    </div>
+    </body>
+</html>
