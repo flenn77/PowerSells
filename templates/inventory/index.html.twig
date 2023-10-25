@@ -4,4 +4,31 @@
 
 {% block body %}
 
+    <div id="newArticle">
+        <div id="emptyNewArticle"></div>
+        <div id="newArticleBtnContainer">
+            <button id="newArticleBtn">NOUVEL ARTICLE</button>
+        </div>
+    </div>
+
+    <style>
+        #newArticle{
+            height: 80px;
+            width: 100%;
+            display: flex;
+        }
+
+        #emptyNewArticle{
+            height: 100%;
+            width: 80%;
+            background-color: green;
+        }
+
+        #newArticleBtnContainer{
+            height: 100%;
+            width: 20%;
+            background-color: blue;
+        }
+    </style>
+
 {% endblock %}

@@ -163,3 +163,65 @@ body{
     width: 35px;
     border-radius: 50%;
 }
+
+.login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+.illustration-image {
+    max-width: 100%;
+    height: auto;
+}
+
+.right-panel {
+    flex: 1;
+    padding: 80px;
+    box-shadow: -3px 0px 15px rgba(0,0,0,0.1);
+    background-color: #fff;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.btn {
+    padding: 10px 20px;
+    background-color: #563D7C;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #46306A;
+}
+.illustration-image {
+    width: 581px;
+    height: 610px;
+    max-width: 100%;
+}
+.left-panel {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: contain;
+}

@@ -8,4 +8,8 @@ document.addEventListener('DOMContentLoaded', function() {
         linkSelected.id = 'linkNotSelected';
         linkNotSelected.id = 'linkSelected';
     }
+
+    if (path.includes('login')){
+        document.getElementById('sidebar').style.display = "none";
+    }
 });
