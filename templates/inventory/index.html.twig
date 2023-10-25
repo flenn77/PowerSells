@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inventaire{% endblock %}
+
+{% block body %}
+
+    <div id="newArticle">
+        <div id="emptyNewArticle"></div>
+        <div id="newArticleBtnContainer">
+            <a href="{{ path('app_inventory_form') }}" id="newArticleBtn">NOUVEL ARTICLE</a>
+        </div>
+    </div>
+
+    <div id="datatableAllArticles">
+
+    </div>
+
+{% endblock %}

@@ -3,109 +3,42 @@
 {% block title %}Page de Connexion{% endblock %}
 
 {% block body %}
-<style>
-/* General container for the login page */
-.login-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    font-family: Arial, sans-serif;
-}
+<div id="loginContainer">
+        <div id="leftLoginContainer">
+                <img src="{{  asset('build/img/loginImage.png')}}" alt="">
+        </div>
+        <div id="rightLoginContainer">
+                <div id="rightLoginContainerAll">
+                        <form method="post">
+                                <div id="rightLoginContainerTitle">
+                                        <h2>Bienvenue sur Powersells !</h2>
+                                        <p>Veuillez vous connecter à votre compte</p>
+                                </div>
+                                <div id="rightLoginContainerForm">
+                                        <div>
+                                                <input type="email" value="{{ last_username }}" name="email"
+                                                       placeholder="Email" id="inputEmail"
+                                                       autocomplete="email" required autofocus>
+                                        </div>
 
-/* Left panel containing the image */
+                                        <div>
+                                                <input type="password" name="password" id="inputPassword"
+                                                       autocomplete="current-password"
+                                                       placeholder="Password"
+                                                       required>
+                                        </div>
 
+                                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                                </div>
 
-
-.illustration-image {
-    max-width: 100%; /* Ensures the image doesn't overflow its container */
-    height: auto;
-}
-
-/* Right panel containing the login form */
-.right-panel {
-    flex: 1;
-    padding: 80px;
-    box-shadow: -3px 0px 15px rgba(0,0,0,0.1); 
-    background-color: #fff; 
-    height: 100%;
-    
-    /* Ajout pour le centrage */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-control {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.btn {
-    padding: 10px 20px;
-    background-color: #563D7C; /* Color from the "CONNEXION" button in the image */
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.btn:hover {
-    background-color: #46306A; /* Slightly darker shade for hover */
-}
-.illustration-image {
-    width: 581px;
-    height: 610px;
-    max-width: 100%;
-}
-.left-panel {
-    flex: 1;
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-size: contain;
-}
-
-
-
-</style>
-<div class="login-container">
-    <div class="left-panel">
-        <img class="illustration-image" src="{{ asset('build/img/image-login-page.png')}}" alt="">
-
-    </div>
-    <div class="right-panel">
-        <h1 class="h3 mb-3 font-weight-normal">Bienvenue sur PowerSells !</h1>
-        <p>Veuillez vous connecter à votre compte :</p>
-
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
-
-        <form method="post">
-            <div class="form-group">
-                <label for="inputEmail">Email</label>
-                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-            </div>
-            
-            <div class="form-group">
-                <label for="inputPassword">Mot de passe</label>
-                <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-            </div>
-
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-            <button class="btn btn-lg btn-primary" type="submit">CONNEXION</button>
-        </form>
-    </div>
+                                <div id="rightLoginContainerBtn">
+                                        <button type="submit">CONNEXION</button>
+                                </div>
+                        </form>
+                        {% if error %}
+                                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+                </div>
+        </div>
 </div>
 {% endblock %}

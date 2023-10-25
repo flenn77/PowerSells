@@ -1,12 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DashboardController!{% endblock %}
+{% block title %}Tableau de bord{% endblock %}
 
 {% block body %}
-    <h1>Welcome to the Dashboard!</h1>
+    <div id="informationContainer">
+        <div id="userConnectedInformation">
+            <div id="userNameAndRules">
+                <h2>John Doe - Manager</h2>
+            </div>
+            <div id="avatarUserImg">
+                <img src="{{ asset('build/img/avatar.png')}}" alt="">
+            </div>
+        </div>
+        <div id="recentArticles">
+            <div id="firstRecentArticles">
+                <p>Nouveaux Articles</p>
+            </div>
+            <div id="secondRecentArticles">
+                <h2>21</h2>
+            </div>
+            <div id="thirdRecentArticles">
+                <p>Mois dernier</p>
+            </div>
+        </div>
+    </div>
 
-    <form action="{{ path('app_logout') }}" method="post">
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('logout') }}">
-        <button type="submit" class="btn btn-danger">Logout</button>
-    </form>
+    <div id="datatableRecentArticles">
+
+    </div>
 {% endblock %}
