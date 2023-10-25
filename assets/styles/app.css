@@ -11,14 +11,21 @@ body{
     background-color: #FFFFFF;
 }
 
+#body{
+    width: 100%;
+    height: 100%;
+}
+
 #sidebar{
     background-color: #f4f5fa;
-    width: 30vh;
+    width: 300px;
     height: 100%;
     box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    position: sticky;
+    top: 0;
 }
 
 #topSidebar{
@@ -124,4 +131,35 @@ body{
     display: flex;
     flex-direction: row;
     height: 100%;
+}
+
+#navbar{
+    background-color: #f4f5fa;
+    height: 50px;
+    width: 100%;
+    display: flex;
+}
+
+#firstContainerNavbar{
+    height: 100%;
+    width: 90%;
+}
+#secondContainerNavbar{
+    height: 100%;
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#profilHead{
+    border-radius: 50%;
+    height: 35px;
+    width: 35px;
+}
+
+#profilHead img{
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
 }

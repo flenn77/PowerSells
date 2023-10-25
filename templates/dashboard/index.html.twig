@@ -3,5 +3,103 @@
 {% block title %}Tableau de bord{% endblock %}
 
 {% block body %}
+    <div id="informationContainer">
+        <div id="userConnectedInformation">
+            <div id="userNameAndRules">
+                <h2>John Doe - Manager</h2>
+            </div>
+            <div id="avatarUserImg">
+                <img src="{{ asset('build/img/avatar.png')}}" alt="">
+            </div>
+        </div>
+        <div id="recentArticles">
+            <div id="firstRecentArticles">
+                Nouveaux Articles
+            </div>
+            <div id="secondRecentArticles">
+                21
+            </div>
+            <div id="thirdRecentArticles">
+                Mois dernier
+            </div>
+        </div>
+    </div>
 
+    <div id="datatableRecentArticles">
+
+    </div>
+
+    <style>
+        #firstRecentArticles{
+
+        }
+
+        #secondRecentArticles{
+
+        }
+
+        #thirdRecentArticles{
+
+        }
+
+        #userNameAndRules{
+            height: 100%;
+            width: 60%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #userNameAndRules h2{
+            color: rgba(58, 53, 65, 0.87);
+        }
+
+        #avatarUserImg{
+            display: flex;
+            justify-content: center;
+            height: 100%;
+            width: 30%;
+        }
+
+        #avatarUserImg img{
+            height: 100%;
+        }
+
+        #informationContainer {
+            height: 30%;
+            width: 100%;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        #userConnectedInformation{
+            height: 80%;
+            width: 60%;
+            border-radius: 6px;
+            box-shadow: 0px 6px 16px -4px rgba(58, 53, 65, 0.10),
+            0px 2px 12px -4px rgba(58, 53, 65, 0.08),
+            0px 2px 12px -4px rgba(58, 53, 65, 0.10);
+            display: flex;
+        }
+
+        #recentArticles{
+            height: 80%;
+            width: 20%;
+            border-radius: 6px;
+            box-shadow: 0px 6px 16px -4px rgba(58, 53, 65, 0.10),
+            0px 2px 12px -4px rgba(58, 53, 65, 0.08),
+            0px 2px 12px -4px rgba(58, 53, 65, 0.10);
+        }
+
+        #datatableRecentArticles{
+            height: 60%;
+            width: 95%;
+            margin: 0 auto;
+            border-radius: 6px;
+            box-shadow: 0px 6px 16px -4px rgba(58, 53, 65, 0.10),
+            0px 2px 12px -4px rgba(58, 53, 65, 0.08),
+            0px 2px 12px -4px rgba(58, 53, 65, 0.10);
+        }
+    </style>
 {% endblock %}

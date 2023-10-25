@@ -13,9 +13,15 @@
     </head>
     <body>
     <div id="bodyContainer">
+
         {% include "_partials/sidebar.html.twig" %}
-        {% block body %}
-        {% endblock %}
+
+        <div id="body">
+            {% include "_partials/navbar.html.twig" %}
+            {% block body %}
+            {% endblock %}
+        </div>
+
     </div>
     </body>
 </html>
