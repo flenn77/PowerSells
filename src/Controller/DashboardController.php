@@ -5,10 +5,14 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class DashboardController extends AbstractController
 {
     #[Route('/dashboard', name: 'app_dashboard')]
+    /**
+     * @Security("is_granted('ROLE_CAISSIER') or is_granted('ROLE_MANAGER')")
+     */
     public function index(): Response
     {
         return $this->render('dashboard/index.html.twig', [
