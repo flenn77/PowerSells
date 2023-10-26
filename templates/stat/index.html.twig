@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello StatController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    
+    <div class="graphique">
+        <div class="colonne colonne-1">
+            <span class="test">Nombre d'articles par catégorie</span>
+            <div class="valeur" data-valeur="1335"></div>
+        </div>
+        <div class="colonne colonne-2">
+            <span>Nombre de produits</span>
+            <div class="valeur" data-valeur="234"></div>
+        </div>
+        <div class="colonne colonne-3">
+            <span>Nombre total de caissiers</span>
+            <div class="valeur" data-valeur="345"></div>
+        </div>
+        <div class="colonne colonne-4">
+            <span>Nombre total de managers</span>
+            <div class="valeur" data-valeur="44"></div>
+    </div>
+
+<script src="{{ asset('build/js/stats.js') }}"></script>
+{% endblock %}

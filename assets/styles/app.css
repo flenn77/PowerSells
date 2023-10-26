@@ -552,3 +552,64 @@ body{
     border-radius: 50px;
     background-color: rgba(145, 85, 253, 0.39);
 }
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f0f0f0;
+}
+
+.graphique {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    margin-top: 120px;
+    transform: scale(20); /* Définir l'échelle initiale à 0.1 */
+    transition: transform 2s; /* Utilisez une transition pour créer l'effet de zoom-in */
+}
+
+.colonne {
+    text-align: center;
+}
+
+.valeur {
+    width: 100px;
+    height: 0;
+    border-radius: 5px;
+    color: #fff;
+    margin-top: 10px;
+    transition: height 0.5s, background-color 0.5s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.colonne-1 .valeur {
+    background-color: #3498db; /* Couleur pastel pour la première colonne */
+    margin: auto;
+    margin-top: 25px!important;
+}
+
+.colonne-2 .valeur {
+    background-color: #e74c3c; /* Couleur pastel pour la deuxième colonne */
+    margin: auto;
+    margin-top: 55px!important;
+}
+
+.colonne-3 .valeur {
+    background-color: #27ae60; /* Couleur pastel pour la troisième colonne */
+    margin: auto;
+    margin-top: 75px!important;
+}
+
+.colonne-4 .valeur {
+    background-color: #f39c12; /* Couleur pastel pour la quatrième colonne */
+    margin: auto;
+    margin-top: 100px!important;
+}
+
+span {
+    display: block;
+    margin: 0 auto; /* Centrer les titres */
+}
+
