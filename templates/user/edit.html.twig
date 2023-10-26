@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block body %}
+<style>
+    #profileFormContainer {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 90px;
+        border: 1px solid #e1e1e1;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .form-group {
+        margin-bottom: 30px;
+    }
+
+    .form-control, select {
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        border-radius: 5px;
+        margin-right: 10px;
+    }
+
+    .btn-primary {
+        background-color: #6f42c1;
+        border: none;
+        color: white;
+    }
+
+    .btn-secondary {
+        background-color: #e1e1e1;
+        border: none;
+        color: #333;
+    }
+
+    .form-buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 20px;
+    }
+</style>
+
+<h1>Edit Profile</h1>
+
+<div id="profileFormContainer">
+    {{ form_start(form) }}
+    <div class="form-group">
+        {{ form_label(form.email, 'Email') }}
+        {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Email'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.firstName, 'First Name') }}
+        {{ form_widget(form.firstName, {'attr': {'class': 'form-control', 'placeholder': 'First Name'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.lastName, 'Last Name') }}
+        {{ form_widget(form.lastName, {'attr': {'class': 'form-control', 'placeholder': 'Last Name'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.phone, 'Phone') }}
+        {{ form_widget(form.phone, {'attr': {'class': 'form-control', 'placeholder': 'Phone'}}) }}
+    </div>
+    <div class="form-group form-buttons">
+        <button type="submit" class="btn btn-primary">Update Profile</button>
+    </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}
