@@ -565,7 +565,7 @@ body {
     padding: 20px;
     margin-top: 120px;
     transform: scale(20); /* Définir l'échelle initiale à 0.1 */
-    transition: transform 2s; /* Utilisez une transition pour créer l'effet de zoom-in */
+    transition: transform 3s; /* Utilisez une transition pour créer l'effet de zoom-in */
 }
 
 .colonne {
