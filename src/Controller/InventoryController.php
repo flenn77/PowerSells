@@ -21,10 +21,15 @@ class InventoryController extends AbstractController
      */
     public function index(ProductRepository $productRepository): Response
     {
-        $products = $productRepository->getAllProducts();
+        $products = $productRepository->getAllActiveProducts();
+        $inactiveProducts = $productRepository->getAllInactiveProducts();
+        $productsAll = $this->getDoctrine()->getRepository(Product::class)->getAllProducts();
+
 
         return $this->render('inventory/index.html.twig', [
-            'products' => $products
+            'products' => $products,
+            'inactiveProducts' => $inactiveProducts,
+            
         ]);
     }
 
@@ -54,8 +59,76 @@ class InventoryController extends AbstractController
     }
 
 
+    // #[Route('/inventory/delete/{id}', name: 'app_inventory_delete')]
+    // /**
+    //  * @Security("is_granted('ROLE_CAISSIER') or is_granted('ROLE_MANAGER')")
+    //  */
+    // public function deleteProduct(int $id, EntityManagerInterface $entityManager, ProductRepository $productRepository): Response
+    // {
+    //     $product = $productRepository->find($id);
+    //     if (!$product) {
+    //         $this->addFlash('error', 'Produit introuvable!');
+    //         return $this->redirectToRoute('app_inventory');
+    //     }
+    
+    //     $entityManager->remove($product);
+    //     $entityManager->flush();
+    
+    //     $this->addFlash('success', 'Produit supprimé avec succès!');
+    //     return $this->redirectToRoute('app_inventory');
+    // }
 
 
+
+
+
+    #[Route('/inventory/edit/{id}', name: 'app_inventory_edit')]
+    /**
+     * @Security("is_granted('ROLE_CAISSIER') or is_granted('ROLE_MANAGER')")
+     */
+    public function edit(int $id, Request $request, EntityManagerInterface $entityManager, ProductRepository $productRepository): Response
+    {
+        $product = $productRepository->find($id);
+        if (!$product) {
+            $this->addFlash('error', 'Produit introuvable!');
+            return $this->redirectToRoute('app_inventory');
+        }
+
+        $form = $this->createForm(ProductType::class, $product);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $product->setUpdatedAt(new \DateTime());
+            $entityManager->flush();
+            $this->addFlash('success', 'Produit modifié avec succès!');
+            return $this->redirectToRoute('app_inventory');
+        }
+
+        return $this->render('inventory/edit.html.twig', [
+            'product' => $product,
+            'form' => $form->createView(),
+        ]);
+    }
+
+
+    #[Route('/inventory/deactivate/{id}', name: 'app_inventory_deactivate')]
+    /**
+     * @Security("is_granted('ROLE_CAISSIER') or is_granted('ROLE_MANAGER')")
+     */
+    public function deactivateProduct(int $id, EntityManagerInterface $entityManager, ProductRepository $productRepository): Response
+    {
+        $product = $productRepository->find($id);
+        if (!$product) {
+            $this->addFlash('error', 'Produit introuvable!');
+            return $this->redirectToRoute('app_inventory');
+        }
+    
+        $product->setActive(false);
+        $entityManager->flush();
+    
+        $this->addFlash('success', 'Produit désactivé avec succès!');
+        return $this->redirectToRoute('app_inventory');
+    }
+    
 
     #[Route('/add-product', name: 'add_product')]
     public function addProduct(Request $request, EntityManagerInterface $entityManager): Response
@@ -78,5 +151,10 @@ class InventoryController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    
+
+
+
 
 }
