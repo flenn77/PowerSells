@@ -3,129 +3,42 @@
 {% block title %}Ajouter un produit{% endblock %}
 
 {% block body %}
-<style>
-    #productFormContainer {
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 90px;
-        border: 1px solid #e1e1e1;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
 
-    h1 {
-        text-align: center;
-        margin-bottom: 30px;
-    }
+<div id="newArticle">
+        <div id="emptyNewArticle">
+                <a href="{{ path('app_inventory') }}">
+                        <svg baseProfile="tiny" height="24px" id="Layer_1" version="1.2" viewBox="0 0 24 24"
+                        width="15px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <path d="M12,9.059V6.5c0-0.256-0.098-0.512-0.293-0.708C11.512,5.597,
+                        11.256,5.5,11,5.5s-0.512,0.097-0.707,0.292L4,12l6.293,6.207
+                        C10.488,18.402,10.744,18.5,11,18.5s0.512-0.098,0.707-0.293S12,17.755,12,
+                        17.5v-2.489c2.75,0.068,5.755,0.566,8,3.989v-1  C20,13.367,16.5,9.557,12,9.059z"/></svg>
 
-    .form-group {
-        margin-bottom: 30px;
-    }
+                        Retour
+                </a>
+        </div>
+        <div id="newArticleBtnContainer">
+        </div>
+</div>
 
-    .form-control, select {
-        width: 100%;
-        padding: 10px 15px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
-
-    .btn {
-        padding: 10px 20px;
-        border-radius: 5px;
-        margin-right: 10px;
-    }
-
-    .btn-primary {
-        background-color: #6f42c1;
-        border: none;
-        color: white;
-    }
-
-    .btn-secondary {
-        background-color: #e1e1e1;
-        border: none;
-        color: #333;
-    }
-
-
-    #formButtons {
-        text-align: right;
-    }
-
-    .form-row {
-        display: flex;
-        gap: 20px;
-    }
-
-    .form-row > .form-group {
-        flex: 1;
-    }
-
-    .form-buttons {
-        display: flex;
-        justify-content: flex-end;
-        gap: 20px;
-    }
-
-
-
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0,0,0,0.5);
-    }
-
-    .modal-content {
-        background-color: #fefefe;
-        margin: 15% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 30%;
-        text-align: center;
-    }
-
-</style>
-
-<h1>Ajouter un produit</h1>
-
-<div id="productFormContainer">
+<div id="formContainer">
     {{ form_start(form) }}
-    <div class="form-group">
-        {{ form_label(form.productName, 'Nom') }}
-        {{ form_widget(form.productName, {'attr': {'class': 'form-control', 'placeholder': 'Nom'}}) }}
-    </div>
-    <div class="form-group">
-        {{ form_label(form.price, 'Prix') }}
-        {{ form_widget(form.price, {'attr': {'class': 'form-control', 'placeholder': 'Prix'}}) }}
-    </div>
-    <div class="form-group">
-        {{ form_label(form.description, 'Description') }}
-        {{ form_widget(form.description, {'attr': {'class': 'form-control', 'placeholder': 'Description'}}) }}
-    </div>
-    <div class="form-row">
-        <div class="form-group">
-            {{ form_label(form.category, 'Catégorie') }}
-            {{ form_widget(form.category, {'attr': {'class': 'form-control'}}) }}
+        <div id="firstLineFormNew">
+                {{ form_widget(form.productName, {'attr': {'placeholder': 'Nom du produit'}}) }}
+                {{ form_widget(form.price, {'attr': {'placeholder': 'Prix'}}) }}
         </div>
-        <div class="form-group">
-            {{ form_label(form.stock, 'Stock') }}
-            {{ form_widget(form.stock, {'attr': {'class': 'form-control', 'placeholder': 'Stock'}}) }}
+        <div id="secondLineFormNew">
+                {{ form_widget(form.category) }}
+                {{ form_widget(form.stock, {'attr': {'placeholder': 'Stock'}}) }}
         </div>
-    </div>
-    <div class="form-group">
-        {{ form_label(form.active, 'Le produit sera-il Actif ?') }}
-        {{ form_widget(form.active) }}
-    </div>
-    <div class="form-group form-buttons">
-        <button type="reset" class="btn btn-secondary">Réinitialiser</button>
-        {{ form_row(form.save, {'label': 'Enregistrer', 'attr': {'class': 'btn btn-primary'}}) }}
-    </div>
+        <div id="thirdLineFormNew">
+                {{ form_widget(form.description, {'attr': {'placeholder': 'Description'}}) }}
+        </div>
+        <div id="fourthLineFormNew">
+                {{ form_row(form.save, {'attr': {'class': 'btnSaveForm'}}) }}
+                <button type="reset" class="btnResetForm">Réinitialiser</button>
+        </div>
     {{ form_end(form) }}
-    
 </div>
 {% endblock %}

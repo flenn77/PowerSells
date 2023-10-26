@@ -42,7 +42,7 @@ class ProductRepository extends ServiceEntityRepository
     public function findRecentProducts()
     {
         return $this->createQueryBuilder('p')
-            ->orderBy('p.createdAt', 'ASC')
+            ->orderBy('p.createdAt', 'DESC')
             ->getQuery()
             ->getResult();
     }

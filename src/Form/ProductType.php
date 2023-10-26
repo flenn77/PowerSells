@@ -26,10 +26,6 @@ class ProductType extends AbstractType
             ->add('price', NumberType::class, [
                 'label' => 'Prix',
             ])
-            ->add('active', CheckboxType::class, [
-                'label' => 'Actif ?',
-                'required' => false,
-            ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
             ])

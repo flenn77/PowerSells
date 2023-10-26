@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -41,11 +43,11 @@ class InventoryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $product->setCreatedAt(new \DateTime());
             $product->setUpdatedAt(new \DateTime());
+            $product->setActive(true);
             $entityManager->persist($product);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Produit ajouté avec succès!');
-            return $this->redirectToRoute('dashboard');
+            return $this->redirectToRoute('app_inventory');
         }
 
         return $this->render('inventory/formInventory.html.twig', [
@@ -53,30 +55,47 @@ class InventoryController extends AbstractController
         ]);
     }
 
-
-
-
-
-    #[Route('/add-product', name: 'add_product')]
-    public function addProduct(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/increment-stock', name: 'increment_stock', methods: ['POST'])]
+    public function incrementStock(Request $request, ProductRepository $productRepository,
+                                   EntityManagerInterface $entityManager): JsonResponse
     {
-        $product = new Product();
-        $form = $this->createForm(ProductType::class, $product);
+        $productId = $request->request->get('productId');
+        $incrementValue = $request->request->get('incrementValue');
 
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $product->setCreatedAt(new \DateTime());
-            $product->setUpdatedAt(new \DateTime());
-            $entityManager->persist($product);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Produit ajouté avec succès!');
-            return $this->redirectToRoute('dashboard');
+        $product = $productRepository->find($productId);
+        if (!$product) {
+            return new JsonResponse(['status' => 'error', 'message' => 'Product not found']);
         }
 
-        return $this->render('product/index.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        $currentStock = $product->getStock();
+        $product->setStock($currentStock + $incrementValue);
+
+        $entityManager->persist($product);
+        $entityManager->flush();
+
+        return new JsonResponse(['status' => 'success', 'message' => 'Stock updated successfully']);
+    }
+
+    #[Route('/decrement-stock', name: 'decrement_stock', methods: ['POST'])]
+    public function decrementStock(Request $request, ProductRepository $productRepository,
+                                   EntityManagerInterface $entityManager): JsonResponse
+    {
+        $productId = $request->request->get('productId');
+        $decrementValue = $request->request->get('decrementValue');
+
+        $product = $productRepository->find($productId);
+        if (!$product) {
+            return new JsonResponse(['status' => 'error', 'message' => 'Product not found']);
+        }
+
+        $currentStock = $product->getStock();
+        $product->setStock($currentStock - $decrementValue);
+
+
+        $entityManager->persist($product);
+        $entityManager->flush();
+
+        return new JsonResponse(['status' => 'success', 'message' => 'Stock updated successfully']);
     }
 
 }

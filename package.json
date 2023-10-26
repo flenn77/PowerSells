@@ -19,6 +19,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
-        "datatables.net": "^1.13.6"
+        "datatables.net": "^1.13.6",
+        "jquery": "^3.7.1"
     }
 }
