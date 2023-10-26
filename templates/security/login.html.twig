@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page de Connexion{% endblock %}
+
+{% block body %}
+<div id="loginContainer">
+        <div id="leftLoginContainer">
+                <img src="{{  asset('build/img/loginImage.png')}}" alt="">
+        </div>
+        <div id="rightLoginContainer">
+                <div id="rightLoginContainerAll">
+                        <form method="post">
+                                <div id="rightLoginContainerTitle">
+                                        <h2>Bienvenue sur Powersells !</h2>
+                                        <p>Veuillez vous connecter à votre compte</p>
+                                </div>
+                                <div id="rightLoginContainerForm">
+                                        <div>
+                                                <input type="email" value="{{ last_username }}" name="email"
+                                                       placeholder="Email" id="inputEmail"
+                                                       autocomplete="email" required autofocus>
+                                        </div>
+
+                                        <div>
+                                                <input type="password" name="password" id="inputPassword"
+                                                       autocomplete="current-password"
+                                                       placeholder="Password"
+                                                       required>
+                                        </div>
+
+                                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                                </div>
+
+                                <div id="rightLoginContainerBtn">
+                                        <button type="submit">CONNEXION</button>
+                                </div>
+                        </form>
+                        {% if error %}
+                                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+                </div>
+        </div>
+</div>
+{% endblock %}

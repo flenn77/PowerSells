@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord{% endblock %}
+
+{% block body %}
+    {% set role = user.roles|first %}
+
+    {% if role == 'ROLE_CAISSIER' %}
+        {% set formattedRole = 'Caissier' %}
+    {% elseif role == 'ROLE_MANAGER' %}
+        {% set formattedRole = 'Manager' %}
+    {% else %}
+        {% set formattedRole = role %}
+    {% endif %}
+
+    <div id="informationContainer">
+        <div id="userConnectedInformation">
+            <div id="userNameAndRules">
+                <h2>{{ user.firstname }} {{ user.lastname }} - {{ formattedRole }}</h2>
+            </div>
+            <div id="avatarUserImg">
+                <img src="{{ asset('build/img/avatar.png')}}" alt="">
+            </div>
+        </div>
+        <div id="recentArticles">
+            <div id="firstRecentArticles">
+                <p>Nouveaux Articles</p>
+            </div>
+            <div id="secondRecentArticles">
+                <h2>{{ countLastProducts }}</h2>
+            </div>
+            <div id="thirdRecentArticles">
+                <p>Mois actuel</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="datatableRecentArticles">
+        <div id="newArticleTitleDatatable">Articles ajoutée récemment</div>
+        <table>
+            <thead>
+            <tr>
+                <th>Marque</th>
+                <th>Produit</th>
+                <th>Catégorie</th>
+                <th>Prix</th>
+                <th>Stock</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in products %}
+                <tr>
+                    <td>{{ product.productName }}</td>
+                    <td>{{ product.description }}</td>
+                    <td>{{ product.category ? product.category.getCategoryName() : '' }}</td>
+                    <td>{{ product.price }} €</td>
+                    <td>{{ product.stock }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
