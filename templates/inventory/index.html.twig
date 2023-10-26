@@ -3,70 +3,21 @@
 {% block title %}Inventaire{% endblock %}
 
 {% block body %}
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-    const searchInputActive = document.getElementById('search-input-active');
-    const tableRowsActive = document.querySelectorAll('#datatableAllArticlesActive tbody tr');
-
-    searchInputActive.addEventListener('input', function () {
-        const searchTerm = searchInputActive.value.toLowerCase();
-
-        tableRowsActive.forEach(row => {
-            const cells = row.querySelectorAll('td');
-            const rowContent = Array.from(cells).map(cell => cell.textContent.toLowerCase()).join(' ');
-            const isVisible = rowContent.includes(searchTerm);
-            row.style.display = isVisible ? '' : 'none';
-        });
-    });
-});
-
-document.addEventListener('DOMContentLoaded', function () {
-    const searchInputInactive = document.getElementById('search-input-inactive');
-    const tableRowsInactive = document.querySelectorAll('#datatableAllArticlesInactive tbody tr');
-
-    searchInputInactive.addEventListener('input', function () {
-        const searchTerm = searchInputInactive.value.toLowerCase();
-
-        tableRowsInactive.forEach(row => {
-            const cells = row.querySelectorAll('td');
-            const rowContent = Array.from(cells).map(cell => cell.textContent.toLowerCase()).join(' ');
-            const isVisible = rowContent.includes(searchTerm);
-            row.style.display = isVisible ? '' : 'none';
-        });
-    });
-});
-
-function actualiserLaPage() {
-    location.reload();
-  }
-
-</script>
-<style>
-    #search-container {
-        margin-bottom: 10px;
-    }
-
-    #search-input {
-        width: 100%;
-        padding: 8px;
-        box-sizing: border-box;
-    }
-</style>
-
     <div id="newArticle">
-        <div id="emptyNewArticle"></div>
+        <div id="emptyNewArticle">
+            <a href="{{ path('app_inventory') }}" id="activesArticles">Articles actifs</a>
+            <a href="{{ path('app_inventory_not_actives') }}" id="notActivesArticles">Articles inactifs</a>
+            <input type="text" id="search-input-active" placeholder="Rechercher dans les articles actifs...">
+        </div>
         <div id="newArticleBtnContainer">
             {% if app.user.roles|first == "ROLE_CAISSIER" %}
             {% elseif app.user.roles|first == "ROLE_MANAGER" %}
-            <a href="{{ path('app_inventory_form') }}" id="newArticleBtn">NOUVEL ARTICLE</a>
+                <a href="{{ path('app_inventory_form') }}" id="newArticleBtn">NOUVEL ARTICLE</a>
             {% endif %}
         </div>
     </div>
 
     <div id="datatableAllArticles">
-        
-
-<!-- Table des articles actifs -->
         <table id="datatableAllArticlesActive">
             <thead>
             <tr>
@@ -76,10 +27,6 @@ function actualiserLaPage() {
                 <th>Prix</th>
                 <th>Stock</th>
                 <th>Actions</th>
-               <th>
-               <input type="text" id="search-input-active" placeholder="Rechercher dans les articles actifs...">
-               <button onclick="actualiserLaPage()">Actualiser la Page</button>
-               </th>
             </tr>
             </thead>
             <tbody>
@@ -124,7 +71,8 @@ function actualiserLaPage() {
                                      viewBox="0 0 50 50" width="50px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                                 <rect fill="none" height="50" width="50"/><polyline fill="none" points="  42.948,12.532 10.489,44.99 3,47 5.009,39.511 37.468,7.052 " stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/><path d="M45.749,11.134c-0.005,0.004,0.824-0.825,0.824-0.825c1.901-1.901,1.901-4.983,0.002-6.883c-1.903-1.902-4.984-1.9-6.885,0  c0,0-0.83,0.83-0.825,0.825L45.749,11.134z"/><polygon points="5.191,39.328 10.672,44.809 3.474,46.526 "/></svg>
                             </a>
-                            <a href="{{ path('app_inventory_deactivate', {id: product.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir désactiver ce produit ?')">
+                            <a href="{{ path('app_inventory_deactivate', {id: product.id}) }}"
+                               onclick="return confirm('Êtes-vous sûr de vouloir désactiver ce produit ?')">
                                 <svg height="512px" id="Layer_1" style="enable-background:new 0 0 512 512;" version="1.1"
                                      viewBox="0 0 512 512" width="512px" xml:space="preserve"
                                      xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -138,109 +86,11 @@ function actualiserLaPage() {
                     </td>
                 </tr>
             {% endfor %}
-
-
-
-
-
-            
             </tbody>
         </table>
     </div>
 
-
-
-
-
-
-    
-    <div id="newArticle">
-        <div id="emptyNewArticle"></div>
-        
-    </div>
-
-    <div id="datatableAllArticles">
-
-<!-- Table des articles inactifs -->
-<table id="datatableAllArticlesInactive">
-            <thead>
-            <tr>
-                <th>Marque</th>
-                <th>Produit</th>
-                <th>Catégorie</th>
-                <th>Prix</th>
-                <th>Stock</th>
-                <th>Actions</th>
-                <th>
-                <input type="text" class="reset" id="search-input-inactive" placeholder="Rechercher dans les articles inactifs...">
-                <button onclick="actualiserLaPage()">Actualiser la Page</button>
-
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for product in inactiveProducts %}
-                <tr>
-                    <td>{{ product.productName }}</td>
-                    <td>{{ product.description }}</td>
-                    <td>{{ product.category ? product.category.getCategoryName() : '' }}</td>
-                    <td>{{ product.price }}</td>
-                    <td>{{ product.stock }}</td>
-                    <td id="actionButtons">
-                        {% if app.user.roles|first == "ROLE_CAISSIER" %}
-                            <a href="">
-                                <svg height="32px" id="Layer_1" version="1.1" viewBox="0 0 32 32" width="32px"
-                                     xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
-                                     xmlns:xlink="http://www.w3.org/1999/xlink"><g><polyline fill="none"
-                                                                                             points="649,137.999 675,137.999 675,155.999 661,155.999" stroke="#FFFFFF"
-                                                                                             stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
-                                        <polyline fill="none" points="   653,155.999 649,155.999 649,141.999  " stroke="#FFFFFF"
-                                                  stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
-                                        <polyline fill="none" points="   661,156 653,162 653,156  " stroke="#FFFFFF"
-                                                  stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/></g>
-                                    <g><path d="M16,30c-3.74,0-7.255-1.456-9.899-4.101C1.779,21.578,0.753,15.025,3.547,
-                                                9.595C3.8,9.104,4.402,8.911,4.894,9.163   c0.491,0.252,0.685,0.855,0.432,1.347C2.931,15.165,
-                                                3.81,20.781,7.515,24.485C9.781,26.752,12.794,28,16,28   c3.205,0,6.219-1.248,8.485-3.515S28,
-                                                19.205,28,16c0-3.206-1.248-6.219-3.515-8.485S19.206,4,16,4   c-3.206,0-6.219,1.249-8.485,
-                                                3.515c-0.391,0.391-1.023,0.391-1.414,0s-0.391-1.023,0-1.414C8.745,3.457,12.26,2,16,2   c3.74,0,7.256,1.457,9.899,4.101C28.544,8.745,30,12.26,30,16c0,3.739-1.456,7.255-4.101,9.899C23.256,28.544,19.74,30,16,30z"/></g><g><path d="M16,22c-0.552,0-1-0.447-1-1V11c0-0.552,0.448-1,1-1s1,0.448,1,1v10C17,21.553,16.552,22,16,22z"/></g><g><path d="M21,17H11c-0.552,0-1-0.448-1-1s0.448-1,1-1h10c0.553,0,1,0.448,1,1S21.553,17,21,17z"/></g></svg>
-                            </a>
-                            <a href="">
-                                <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                                    <defs>
-                                        <style>.cls-1{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;
-                                                stroke-width:2px;}</style></defs><title/><g id="minus"><line class="cls-1" x1="7"
-                                                                                                             x2="25" y1="16" y2="16"/></g>
-                                </svg>
-                            </a>
-                        {% elseif app.user.roles|first == "ROLE_MANAGER" %}
-                            <a href="{{ path('app_inventory_edit', {id: product.id}) }}">
-                                <svg enable-background="new 0 0 50 50" height="50px" id="Layer_1" version="1.1"
-                                     viewBox="0 0 50 50" width="50px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                                <rect fill="none" height="50" width="50"/><polyline fill="none" points="  42.948,12.532 10.489,44.99 3,47 5.009,39.511 37.468,7.052 " stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/><path d="M45.749,11.134c-0.005,0.004,0.824-0.825,0.824-0.825c1.901-1.901,1.901-4.983,0.002-6.883c-1.903-1.902-4.984-1.9-6.885,0  c0,0-0.83,0.83-0.825,0.825L45.749,11.134z"/><polygon points="5.191,39.328 10.672,44.809 3.474,46.526 "/></svg>
-                            </a>
-                            <a href="{{ path('app_inventory_deactivate', {id: product.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir désactiver ce produit ?')">
-                                <svg height="512px" id="Layer_1" style="enable-background:new 0 0 512 512;" version="1.1"
-                                     viewBox="0 0 512 512" width="512px" xml:space="preserve"
-                                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                                    <g><path d="M400,113.3h-80v-20c0-16.2-13.1-29.3-29.3-29.3h-69.5C205.1,64,192,77.1,
-                                                    192,93.3v20h-80V128h21.1l23.6,290.7   c0,16.2,13.1,29.3,29.3,29.3h141c16.2,0,29.3-13.1,
-                                                    29.3-29.3L379.6,128H400V113.3z M206.6,93.3c0-8.1,6.6-14.7,14.6-14.7h69.5
-                                                    c8.1,0,14.6,6.6,14.6,14.7v20h-98.7V93.3z M341.6,417.9l0,0.4v0.4c0,8.1-6.6,14.7-14.6,
-                                                    14.7H186c-8.1,0-14.6-6.6-14.6-14.7v-0.4   l0-0.4L147.7,128h217.2L341.6,417.9z"/><g><rect height="241" width="14" x="249" y="160"/><polygon points="320,160 305.4,160 294.7,401 309.3,401   "/><polygon points="206.5,160 192,160 202.7,401 217.3,401   "/></g></g></svg>
-                            </a>
-                        {% endif %}
-                    </td>
-                </tr>
-            {% endfor %}
-
-
-
-
-
-            
-            </tbody>
-        </table>
-    </div>
+    <script src="{{ asset('build/js/searchArticle.js') }}"></script>
 
     <script>
         const addStockBtn = document.getElementsByClassName('addStockBtn');

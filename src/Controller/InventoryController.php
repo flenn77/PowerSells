@@ -24,12 +24,21 @@ class InventoryController extends AbstractController
     public function index(ProductRepository $productRepository): Response
     {
         $products = $productRepository->getAllActiveProducts();
-        $inactiveProducts = $productRepository->getAllInactiveProducts();
-        $productsAll = $this->getDoctrine()->getRepository(Product::class)->getAllProducts();
-
 
         return $this->render('inventory/index.html.twig', [
             'products' => $products,
+        ]);
+    }
+
+    #[Route('/inventory/not-actives', name: 'app_inventory_not_actives')]
+    /**
+     * @Security("is_granted('ROLE_CAISSIER') or is_granted('ROLE_MANAGER')")
+     */
+    public function notActivesArticles(ProductRepository $productRepository): Response
+    {
+        $inactiveProducts = $productRepository->getAllInactiveProducts();
+
+        return $this->render('inventory/notActivesArticles.html.twig', [
             'inactiveProducts' => $inactiveProducts,
 
         ]);

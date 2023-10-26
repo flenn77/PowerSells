@@ -3,10 +3,9 @@
 {% block title %}Ajouter un produit{% endblock %}
 
 {% block body %}
-
 <div id="newArticle">
-        <div id="emptyNewArticle">
-                <a href="{{ path('app_inventory') }}">
+        <div id="emptyNewArticleInventory">
+                <a id="backEmptyNewArticle" href="{{ path('app_inventory') }}">
                         <svg baseProfile="tiny" height="24px" id="Layer_1" version="1.2" viewBox="0 0 24 24"
                         width="15px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -36,8 +35,8 @@
                 {{ form_widget(form.description, {'attr': {'placeholder': 'Description'}}) }}
         </div>
         <div id="fourthLineFormNew">
-                {{ form_row(form.save, {'attr': {'class': 'btnSaveForm'}}) }}
                 <button type="reset" class="btnResetForm">Réinitialiser</button>
+                {{ form_row(form.save, {'attr': {'class': 'btnSaveForm'}}) }}
         </div>
     {{ form_end(form) }}
 </div>

@@ -19,7 +19,7 @@ class DashboardController extends AbstractController
     public function index(ProductRepository $productRepository): Response
     {
         $user = $this->getUser();
-        $countLastProducts = $productRepository->countProductsOfLastMonth();
+        $countLastProducts = $productRepository->countProductsOfCurrentMonth();
         $recentProducts = $productRepository->findRecentProducts();
 
         return $this->render('dashboard/index.html.twig', [

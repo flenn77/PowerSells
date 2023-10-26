@@ -25,10 +25,10 @@ class ProductRepository extends ServiceEntityRepository
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Doctrine\ORM\NoResultException
      */
-    public function countProductsOfLastMonth(): float|bool|int|string|null
+    public function countProductsOfCurrentMonth(): float|bool|int|string|null
     {
-        $startDate = new \DateTime('first day of last month');
-        $endDate = new \DateTime('last day of last month');
+        $startDate = new \DateTime('first day of this month');
+        $endDate = new \DateTime('now');
 
         return $this->createQueryBuilder('p')
             ->select('COUNT(p.id)')
