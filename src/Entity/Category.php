@@ -89,6 +89,7 @@ class Category
         return $this;
     }
 
+
     /**
      * @return Collection<int, Product>
      */

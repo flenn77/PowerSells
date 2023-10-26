@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Product;
+use App\Entity\User;
+use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,10 +16,16 @@ class DashboardController extends AbstractController
     /**
      * @Security("is_granted('ROLE_CAISSIER') or is_granted('ROLE_MANAGER')")
      */
-    public function index(): Response
+    public function index(ProductRepository $productRepository): Response
     {
+        $user = $this->getUser();
+        $countLastProducts = $productRepository->countProductsOfLastMonth();
+        $recentProducts = $productRepository->findRecentProducts();
+
         return $this->render('dashboard/index.html.twig', [
-            'controller_name' => 'DashboardController',
+            'user' => $user,
+            'countLastProducts' => $countLastProducts,
+            'products' => $recentProducts
         ]);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,10 +14,12 @@ class InventoryController extends AbstractController
     /**
      * @Security("is_granted('ROLE_CAISSIER') or is_granted('ROLE_MANAGER')")
      */
-    public function index(): Response
+    public function index(ProductRepository $productRepository): Response
     {
+        $products = $productRepository->getAllProducts();
+
         return $this->render('inventory/index.html.twig', [
-            'controller_name' => 'InventoryController',
+            'products' => $products
         ]);
     }
 
