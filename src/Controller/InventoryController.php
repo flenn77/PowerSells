@@ -2,29 +2,38 @@
 
 namespace App\Controller;
 
+use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\ProductType;
-use App\Entity\Product;   
+use App\Entity\Product;
 
 class InventoryController extends AbstractController
 {
     #[Route('/inventory', name: 'app_inventory')]
-    public function index(): Response
+    /**
+     * @Security("is_granted('ROLE_CAISSIER') or is_granted('ROLE_MANAGER')")
+     */
+    public function index(ProductRepository $productRepository): Response
     {
+        $products = $productRepository->getAllProducts();
+
         return $this->render('inventory/index.html.twig', [
-            'controller_name' => 'InventoryController',
+            'products' => $products
         ]);
     }
 
     #[Route('/inventory/form', name: 'app_inventory_form')]
     public function form(Request $request, EntityManagerInterface $entityManager): Response
+    /**
+     * @Security("is_granted('ROLE_CAISSIER') or is_granted('ROLE_MANAGER')")
+     */
     {
-        
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
 
@@ -47,7 +56,7 @@ class InventoryController extends AbstractController
 
 
 
-    
+
     #[Route('/add-product', name: 'add_product')]
     public function addProduct(Request $request, EntityManagerInterface $entityManager): Response
     {

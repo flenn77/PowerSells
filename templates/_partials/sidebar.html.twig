@@ -1,7 +1,9 @@
 <div id="sidebar">
 
     <div id="topSidebar">
-        <div id="logo"></div>
+        <div id="logo">
+            <img src="{{  asset('build/img/logo.png')}}" alt="">
+        </div>
         <div id="links">
             <ul>
                 <li>
@@ -30,12 +32,27 @@
 
     <div id="bottomSidebar">
         <div id="disconnectLogo">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
-                <path d="M15.5833 6.41667L14.2908 7.70917L16.6558 10.0833H7.33331V11.9167H16.6558L14.2908 14.2817L15.5833 15.5833L20.1666 11L15.5833 6.41667ZM3.66665 4.58333H11V2.75H3.66665C2.65831 2.75 1.83331 3.575 1.83331 4.58333V17.4167C1.83331 18.425 2.65831 19.25 3.66665 19.25H11V17.4167H3.66665V4.58333Z" fill="#3A3541" fill-opacity="0.87"/>
-            </svg>
+            <a href="{{ path('app_logout') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                    <path d="M15.5833 6.41667L14.2908 7.70917L16.6558 10.0833H7.33331V11.9167H16.6558L14.2908 14.2817L15.5833 15.5833L20.1666 11L15.5833 6.41667ZM3.66665 4.58333H11V2.75H3.66665C2.65831 2.75 1.83331 3.575 1.83331 4.58333V17.4167C1.83331 18.425 2.65831 19.25 3.66665 19.25H11V17.4167H3.66665V4.58333Z" fill="#3A3541" fill-opacity="0.87"/>
+                </svg>
+            </a>
         </div>
     </div>
 
 </div>
+
+<style>
+    #logo img{
+        height: 30px;
+        width: 100px;
+    }
+
+    #logo{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
 
 <script src="{{ asset('build/js/sidebar.js') }}"></script>

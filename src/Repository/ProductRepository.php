@@ -21,28 +21,36 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
-//    /**
-//     * @return Product[] Returns an array of Product objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\NoResultException
+     */
+    public function countProductsOfLastMonth(): float|bool|int|string|null
+    {
+        $startDate = new \DateTime('first day of last month');
+        $endDate = new \DateTime('last day of last month');
 
-//    public function findOneBySomeField($value): ?Product
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        return $this->createQueryBuilder('p')
+            ->select('COUNT(p.id)')
+            ->andWhere('p.createdAt BETWEEN :start_date AND :end_date')
+            ->setParameter('start_date', $startDate, \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE)
+            ->setParameter('end_date', $endDate, \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function findRecentProducts()
+    {
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.createdAt', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getAllProducts()
+    {
+        return $this->createQueryBuilder('p')
+            ->getQuery()
+            ->getResult();
+    }
 }
