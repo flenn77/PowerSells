@@ -21,7 +21,7 @@ body{
     width: 300px;
     height: 100%;
     box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: space-between;
     position: sticky;
@@ -137,7 +137,7 @@ body{
     background-color: #f4f5fa;
     height: 50px;
     width: 100%;
-    display: flex;
+    display: none;
 }
 
 #firstContainerNavbar{
@@ -177,7 +177,7 @@ body{
 
 #newArticleBtnContainer{
     height: 100%;
-    width: 20%;
+    width: 30%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -483,6 +483,7 @@ body{
 #datatableRecentArticles table, #datatableAllArticles table {
     border-spacing:0;
     border-collapse: collapse;
+    width: 100%;
 }
 
 #datatableRecentArticles table thead tr th, #datatableAllArticles table thead tr th {
@@ -512,7 +513,18 @@ body{
     color: rgba(58, 53, 65, 0.87);
 }
 
-#datatableRecentArticles, #datatableAllArticles{
+#datatableRecentArticles{
+    height: 60%;
+    width: 95%;
+    margin: 0 auto;
+    border-radius: 6px;
+    box-shadow: 0px 6px 16px -4px rgba(58, 53, 65, 0.10),
+    0px 2px 12px -4px rgba(58, 53, 65, 0.08),
+    0px 2px 12px -4px rgba(58, 53, 65, 0.10);
+    overflow-y: scroll;
+}
+
+#datatableAllArticles{
     height: 80%;
     width: 95%;
     margin: 0 auto;
@@ -540,7 +552,7 @@ body{
     text-decoration: none;
 }
 #actionButtons a svg {
-    height: 15px;
+    height: 20px;
     width: 25px;
     padding: 5px;
 }
@@ -551,4 +563,170 @@ body{
     cursor: pointer;
     border-radius: 50px;
     background-color: rgba(145, 85, 253, 0.39);
+}
+
+#emptyNewArticle{
+    display: flex;
+    align-items: center;
+}
+#formContainer{
+    height: 40%;
+    width: 90%;
+    border-radius: 6px;
+    box-shadow: 0px 6px 16px -4px rgba(58, 53, 65, 0.10),
+    0px 2px 12px -4px rgba(58, 53, 65, 0.08),
+    0px 2px 12px -4px rgba(58, 53, 65, 0.10);
+    margin: 150px auto 0;
+    padding: 30px;
+}
+
+#firstLineFormNew, #secondLineFormNew, #thirdLineFormNew, #fourthLineFormNew{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 30px;
+}
+
+#firstLineFormNew input, #secondLineFormNew input,
+#thirdLineFormNew input, #secondLineFormNew select{
+    width: 40%;
+    padding: 16px 0px 16px 5px;
+    border-radius: 6px;
+    border: 1px solid rgba(58, 53, 65, 0.23);
+    text-indent: 10px;
+}
+
+#thirdLineFormNew textarea{
+    width: 90%;
+    padding: 16px 0px 16px 5px;
+    border-radius: 6px;
+    border: 1px solid rgba(58, 53, 65, 0.23);
+    text-indent: 10px;
+}
+
+.btnSaveForm{
+    background-color: #9155FD;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 10px 20px 10px 20px;
+    font-size: 12px;
+    transition: .6s;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+}
+
+.btnResetForm{
+    background-color: white;
+    color: rgba(138, 141, 147, 0.59);
+    border: 1px solid rgba(138, 141, 147, 0.50);
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 10px 20px 10px 20px;
+    font-size: 12px;
+    transition: .6s;
+    margin: 15px;
+    cursor: pointer;
+}
+
+#emptyNewArticle a{
+    background-color: #9155FD;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 10px 20px 10px 20px;
+    font-size: 12px;
+    transition: .6s;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    margin-left: 40px;
+    align-items: center;
+    width: 6%;
+}
+
+#emptyNewArticleInventory a{
+    background-color: #9155FD;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 10px 20px 10px 20px;
+    font-size: 12px;
+    transition: .6s;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    margin-left: 40px;
+    align-items: center;
+    width: 6%;
+}
+
+#emptyNewArticle a svg path{
+    fill: white;
+}
+
+#emptyNewArticleInventory a svg path{
+    fill: white;
+}
+
+#logo img{
+    height: 30px;
+    width: 103px;
+}
+
+#logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#emptyNewArticle{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#emptyNewArticleInventory{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+}
+
+#emptyNewArticle input {
+    width: 40%;
+    padding: 16px 0px 16px 5px;
+    border-radius: 6px;
+    border: 1px solid rgba(58, 53, 65, 0.23);
+    text-indent: 10px;
+}
+
+#buttonResetSearch {
+    background-color: white;
+    color: #9155FD;
+    border: 1px solid #9155FD;
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 10px 20px 10px 20px;
+    font-size: 12px;
+    transition: .6s;
+    margin: 15px;
+    cursor: pointer;
+}
+
+#activesArticles{
+    width: 90px !important;
+}
+
+#notActivesArticles{
+    width: 90px !important;
+    background-color: white !important;
+    color: #9155FD !important;
+    border: 1px solid #9155FD !important;
+}
+
+#backEmptyNewArticle{
+    display: flex;
+    justify-content: space-between;
 }

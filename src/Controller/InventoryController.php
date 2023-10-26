@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -22,14 +24,23 @@ class InventoryController extends AbstractController
     public function index(ProductRepository $productRepository): Response
     {
         $products = $productRepository->getAllActiveProducts();
-        $inactiveProducts = $productRepository->getAllInactiveProducts();
-        $productsAll = $this->getDoctrine()->getRepository(Product::class)->getAllProducts();
-
 
         return $this->render('inventory/index.html.twig', [
             'products' => $products,
+        ]);
+    }
+
+    #[Route('/inventory/not-actives', name: 'app_inventory_not_actives')]
+    /**
+     * @Security("is_granted('ROLE_CAISSIER') or is_granted('ROLE_MANAGER')")
+     */
+    public function notActivesArticles(ProductRepository $productRepository): Response
+    {
+        $inactiveProducts = $productRepository->getAllInactiveProducts();
+
+        return $this->render('inventory/notActivesArticles.html.twig', [
             'inactiveProducts' => $inactiveProducts,
-            
+
         ]);
     }
 
@@ -46,11 +57,11 @@ class InventoryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $product->setCreatedAt(new \DateTime());
             $product->setUpdatedAt(new \DateTime());
+            $product->setActive(true);
             $entityManager->persist($product);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Produit ajouté avec succès!');
-            return $this->redirectToRoute('dashboard');
+            return $this->redirectToRoute('app_inventory');
         }
 
         return $this->render('inventory/formInventory.html.twig', [
@@ -58,29 +69,48 @@ class InventoryController extends AbstractController
         ]);
     }
 
+    #[Route('/increment-stock', name: 'increment_stock', methods: ['POST'])]
+    public function incrementStock(Request $request, ProductRepository $productRepository,
+                                   EntityManagerInterface $entityManager): JsonResponse
+    {
+        $productId = $request->request->get('productId');
+        $incrementValue = $request->request->get('incrementValue');
 
-    // #[Route('/inventory/delete/{id}', name: 'app_inventory_delete')]
-    // /**
-    //  * @Security("is_granted('ROLE_CAISSIER') or is_granted('ROLE_MANAGER')")
-    //  */
-    // public function deleteProduct(int $id, EntityManagerInterface $entityManager, ProductRepository $productRepository): Response
-    // {
-    //     $product = $productRepository->find($id);
-    //     if (!$product) {
-    //         $this->addFlash('error', 'Produit introuvable!');
-    //         return $this->redirectToRoute('app_inventory');
-    //     }
-    
-    //     $entityManager->remove($product);
-    //     $entityManager->flush();
-    
-    //     $this->addFlash('success', 'Produit supprimé avec succès!');
-    //     return $this->redirectToRoute('app_inventory');
-    // }
+        $product = $productRepository->find($productId);
+        if (!$product) {
+            return new JsonResponse(['status' => 'error', 'message' => 'Product not found']);
+        }
+
+        $currentStock = $product->getStock();
+        $product->setStock($currentStock + $incrementValue);
+
+        $entityManager->persist($product);
+        $entityManager->flush();
+
+        return new JsonResponse(['status' => 'success', 'message' => 'Stock updated successfully']);
+    }
+
+    #[Route('/decrement-stock', name: 'decrement_stock', methods: ['POST'])]
+    public function decrementStock(Request $request, ProductRepository $productRepository,
+                                   EntityManagerInterface $entityManager): JsonResponse
+    {
+        $productId = $request->request->get('productId');
+        $decrementValue = $request->request->get('decrementValue');
+
+        $product = $productRepository->find($productId);
+        if (!$product) {
+            return new JsonResponse(['status' => 'error', 'message' => 'Product not found']);
+        }
+
+        $currentStock = $product->getStock();
+        $product->setStock($currentStock - $decrementValue);
 
 
+        $entityManager->persist($product);
+        $entityManager->flush();
 
-
+        return new JsonResponse(['status' => 'success', 'message' => 'Stock updated successfully']);
+    }
 
     #[Route('/inventory/edit/{id}', name: 'app_inventory_edit')]
     /**
@@ -121,40 +151,12 @@ class InventoryController extends AbstractController
             $this->addFlash('error', 'Produit introuvable!');
             return $this->redirectToRoute('app_inventory');
         }
-    
+
         $product->setActive(false);
         $entityManager->flush();
-    
+
         $this->addFlash('success', 'Produit désactivé avec succès!');
         return $this->redirectToRoute('app_inventory');
     }
-    
-
-    #[Route('/add-product', name: 'add_product')]
-    public function addProduct(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $product = new Product();
-        $form = $this->createForm(ProductType::class, $product);
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $product->setCreatedAt(new \DateTime());
-            $product->setUpdatedAt(new \DateTime());
-            $entityManager->persist($product);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Produit ajouté avec succès!');
-            return $this->redirectToRoute('dashboard');
-        }
-
-        return $this->render('product/index.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-
-    
-
-
-
 
 }

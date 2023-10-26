@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inventaire{% endblock %}
+
+{% block body %}
+    <div id="newArticle">
+        <div id="emptyNewArticle">
+            <a href="{{ path('app_inventory') }}" id="notActivesArticles">Articles actifs</a>
+            <a href="{{ path('app_inventory_not_actives') }}" id="activesArticles">Articles inactifs</a>
+            <input type="text" id="search-input-active" placeholder="Rechercher dans les articles actifs...">
+        </div>
+        <div id="newArticleBtnContainer">
+            {% if app.user.roles|first == "ROLE_CAISSIER" %}
+            {% elseif app.user.roles|first == "ROLE_MANAGER" %}
+                <a href="{{ path('app_inventory_form') }}" id="newArticleBtn">NOUVEL ARTICLE</a>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if inactiveProducts|length == 0 %}
+    <div style="display: flex;justify-content: center;align-items: center;" id="datatableAllArticles">
+            <h4>Aucun produit inactif</h4>
+    </div>
+    {% else %}
+
+    <div id="datatableAllArticles">
+
+        <table id="datatableAllArticlesInactive">
+                <thead>
+                <tr>
+                    <th>Marque</th>
+                    <th>Produit</th>
+                    <th>Catégorie</th>
+                    <th>Prix</th>
+                    <th>Stock</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for product in inactiveProducts %}
+                    <tr>
+                        <td>{{ product.productName }}</td>
+                        <td>{{ product.description }}</td>
+                        <td>{{ product.category ? product.category.getCategoryName() : '' }}</td>
+                        <td>{{ product.price }}</td>
+                        <td>{{ product.stock }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        {% endif %}
+    </div>
+
+    <script src="{{ asset('build/js/searchArticle.js') }}"></script>
+
+{% endblock %}
