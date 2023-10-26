@@ -47,10 +47,36 @@ class ProductRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+
+
+    //BONUS : afficher les produits non actif
     public function getAllProducts()
     {
         return $this->createQueryBuilder('p')
             ->getQuery()
             ->getResult();
     }
+
+    public function getAllActiveProducts()
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.active = :active')
+            ->setParameter('active', 1)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getAllInactiveProducts()
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.active = :val')
+            ->setParameter('val', 0)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
+    
+
 }
