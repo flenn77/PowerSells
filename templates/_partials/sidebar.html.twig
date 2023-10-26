@@ -1,7 +1,9 @@
 <div id="sidebar">
 
     <div id="topSidebar">
-        <div id="logo"></div>
+        <div id="logo">
+            <img src="{{  asset('build/img/logo.png')}}" alt="">
+        </div>
         <div id="links">
             <ul>
                 <li>
@@ -39,5 +41,18 @@
     </div>
 
 </div>
+
+<style>
+    #logo img{
+        height: 30px;
+        width: 100px;
+    }
+
+    #logo{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
 
 <script src="{{ asset('build/js/sidebar.js') }}"></script>
