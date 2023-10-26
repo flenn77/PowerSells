@@ -1,23 +1,131 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inventaire{% endblock %}
+{% block title %}Ajouter un produit{% endblock %}
 
 {% block body %}
+<style>
+    #productFormContainer {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 90px;
+        border: 1px solid #e1e1e1;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-    <div id="articleFormContainer">
-        <div id="articleFormImg">
-            <div id="articleFormImgShow">
-                <div></div>
-            </div>
-            <div id="addBtnImg">
-                <a href="" id="addImg">AJOUTER UNE PHOTO</a>
-                <a href="" id="resetImg">REINITIALISER</a>
-            </div>
+    h1 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .form-group {
+        margin-bottom: 30px;
+    }
+
+    .form-control, select {
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        border-radius: 5px;
+        margin-right: 10px;
+    }
+
+    .btn-primary {
+        background-color: #6f42c1;
+        border: none;
+        color: white;
+    }
+
+    .btn-secondary {
+        background-color: #e1e1e1;
+        border: none;
+        color: #333;
+    }
+
+
+    #formButtons {
+        text-align: right;
+    }
+
+    .form-row {
+        display: flex;
+        gap: 20px;
+    }
+
+    .form-row > .form-group {
+        flex: 1;
+    }
+
+    .form-buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 20px;
+    }
+
+
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 30%;
+        text-align: center;
+    }
+
+</style>
+
+<h1>Ajouter un produit</h1>
+
+<div id="productFormContainer">
+    {{ form_start(form) }}
+    <div class="form-group">
+        {{ form_label(form.productName, 'Nom') }}
+        {{ form_widget(form.productName, {'attr': {'class': 'form-control', 'placeholder': 'Nom'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.price, 'Prix') }}
+        {{ form_widget(form.price, {'attr': {'class': 'form-control', 'placeholder': 'Prix'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.description, 'Description') }}
+        {{ form_widget(form.description, {'attr': {'class': 'form-control', 'placeholder': 'Description'}}) }}
+    </div>
+    <div class="form-row">
+        <div class="form-group">
+            {{ form_label(form.category, 'Catégorie') }}
+            {{ form_widget(form.category, {'attr': {'class': 'form-control'}}) }}
         </div>
-        <div id="articleFormInput"></div>
-        <div id="articleFormBtn">
-            <a href="" id="saveArticleForm">ENREGISTRER</a>
-            <a href="" id="resetArticleForm">REINITIALISER</a>
+        <div class="form-group">
+            {{ form_label(form.stock, 'Stock') }}
+            {{ form_widget(form.stock, {'attr': {'class': 'form-control', 'placeholder': 'Stock'}}) }}
         </div>
     </div>
+    <div class="form-group">
+        {{ form_label(form.active, 'Le produit sera-il Actif ?') }}
+        {{ form_widget(form.active) }}
+    </div>
+    <div class="form-group form-buttons">
+        <button type="reset" class="btn btn-secondary">Réinitialiser</button>
+        {{ form_row(form.save, {'label': 'Enregistrer', 'attr': {'class': 'btn btn-primary'}}) }}
+    </div>
+    {{ form_end(form) }}
+    
+</div>
 {% endblock %}
