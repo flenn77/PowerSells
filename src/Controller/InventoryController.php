@@ -30,6 +30,29 @@ class InventoryController extends AbstractController
         ]);
     }
 
+
+    #[Route('/toggle-product-status/{id}', name: 'app_inventory_toggle_status', requirements: ['id' => '\d+'])]
+    /**
+     * @Security("is_granted('ROLE_MANAGER')")
+     */
+    public function toggleProductStatus(int $id, EntityManagerInterface $entityManager, ProductRepository $productRepository): Response
+    {
+        $product = $productRepository->find($id);
+        if (!$product) {
+            $this->addFlash('error', 'Produit introuvable!');
+            return $this->redirectToRoute('app_inventory');
+        }
+
+        // Toggle the active status
+        $product->setActive(!$product->isActive());
+        $entityManager->flush();
+
+        $statusMessage = $product->isActive() ? 'Produit activé avec succès!' : 'Produit désactivé avec succès!';
+        $this->addFlash('success', $statusMessage);
+
+        return $this->redirectToRoute('app_inventory');
+}
+
     #[Route('/inventory/not-actives', name: 'app_inventory_not_actives')]
     /**
      * @Security("is_granted('ROLE_CAISSIER') or is_granted('ROLE_MANAGER')")
